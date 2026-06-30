@@ -51,3 +51,22 @@ checkpoints/
 # System files
 .DS_Store
 *.swp
+# Training / experiment outputs
+logs/
+runs/
+wandb/
+*.pt
+*.pth
+*.onnx
+*.npz
+*.npy
+*.bag
+*.db3
+*.mp4
+*.avi
+*.mov
+
+# MuJoCo generated files / build output
+unitree_mujoco/build/
+unitree_mujoco/**/build/
+unitree_mujoco/**/__pycache__/》
