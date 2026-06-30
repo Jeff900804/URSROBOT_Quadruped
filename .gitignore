@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+.venv/
+venv/
+env/
+
+# Conda
+.conda/
+conda-meta/
+
+# IDE
+.vscode/
+.idea/
+
+# Isaac Sim / Isaac Lab cache
+.cache/
+.omniverse/
+isaac-sim/
+IsaacLab/_build/
+IsaacLab/_isaac_sim/
+IsaacLab/logs/
+IsaacLab/data/
+
+# Training logs and checkpoints
+logs/
+runs/
+wandb/
+tensorboard/
+checkpoints/
+*.pt
+*.pth
+*.onnx
+*.ckpt
+
+# Dataset and recorded data
+*.npz
+*.npy
+*.bag
+*.db3
+*.csv
+*.bin
+
+# Videos
+*.mp4
+*.avi
+*.mov
+
+# System files
+.DS_Store
+*.swp

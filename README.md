@@ -1,0 +1,89 @@
+# Quadrupedal Robot Locomotion Control for Obstacle Traversal and Crouching
+## Overview
+This project presents a locomotion control framework for a quadrupedal robot capable of performing stable velocity tracking, obstacle traversal, and crouching posture transitions.
+
+The controller is designed to enable the robot to adapt its body posture and leg motion according to commanded velocity and local terrain information. In addition to normal walking, the system supports traversing discontinuous terrain or low obstacles and switching to a crouching motion mode when reduced body height is required.
+
+The project is validated in both simulation and real-world experiments using a quadrupedal robot platform.
+
+## Environmemt
+### Installing Isaac Sim
+You can create the Isaac Lab environment using the following commands.
+```bash
+conda create -n env_isaaclab python=3.11
+conda activate env_isaaclab
+```
+Ensure the latest pip version is installed. To update pip, run the following command from inside the virtual environment:
+```bash
+pip install --upgrade pip
+pip install -r requirements.txt
+```
+Install Isaac Sim pip packages:
+```bash
+pip install "isaacsim[all,extscache]==5.1.0" --extra-index-url https://pypi.nvidia.com
+```
+Install a CUDA-enabled PyTorch build that matches your system architecture:
+```bash
+pip install -U torch==2.7.0 torchvision==0.22.0 --index-url https://download.pytorch.org/whl/cu128
+```
+### Installing Isaac Lab
+#### Cloning Isaac lab
+```bash
+cd /path/to/URSROBOT_Quadruped
+git clone https://github.com/isaac-sim/IsaacLab.git
+```
+#### Installation
+Run the install command that iterates over all the extensions in source directory and installs them using pip
+```bash
+sudo apt install cmake build-essential
+cd IsaacLab/
+./isaaclab.sh --install
+```
+### Installing Unitree RL Lab
+Use a python interpreter that has Isaac Lab installed, install the library in editable mode using:
+```bash
+cd ..
+cd unitree_rl_lab
+./unitree_rl_lab.sh -i
+```
+
+## 1. Training RL policy
+
+### 1-1. Framework
+We use the unitree_rl_lab training framework. Within this framework, we incorporate the friction coefficient and restitution coefficient in the environment as observed parameters of the policy, enabling the agent to generate different strategies based on the current environmental variables.
+![image](https://github.com/Jeff900804/RL/blob/main/image/framework1.png)
+
+### 1-2. Envs setting  
+First, we add a foot_friction in [velocity_env_cfg.py](./unitree_rl_lab/source/unitree_rl_lab/unitree_rl_lab/tasks/locomotion/robots/go2/velocity_env_cfg.py) class ObservationCfg. (Just introduce what we do.)
+```python
+@configclass
+class ObservationsCfg:
+    """Observation specifications for the MDP."""
+
+    @configclass
+    class PolicyCfg(ObsGroup):
+        """Observations for policy group."""
+        # observation terms (order preserved)
+        ...
+
+        foot_friction = ObsTerm(
+           func=mdp.foot_friction_4legs,
+           clip=(-10.0, 10.0),
+        )
+        ...
+
+    @configclass
+    class CriticCfg(ObsGroup):
+        """Observations for critic group."""
+        ...
+        foot_friction = ObsTerm(
+           func=mdp.foot_friction_4legs,
+           clip=(-10.0, 10.0),
+        )
+```
+### 1-3. Training RL policy   
+Training times: 10000  
+num_envs: 4096
+```python
+./unitree_rl_lab.sh -t --task Unitree-Go2-Velocity --headless  
+```
