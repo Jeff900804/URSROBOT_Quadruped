@@ -1,4 +1,4 @@
-# Quadrupedal Robot Locomotion Control for Obstacle Traversal and Crouching
+# [Quadrupedal Robot Locomotion Control for Obstacle Traversal and Crouching](https://jeff900804.github.io/URSROBOT_Quadruped/)
 ## Overview
 This project presents a locomotion control framework for a quadrupedal robot capable of performing stable velocity tracking, obstacle traversal, and crouching posture transitions.
 
@@ -46,5 +46,3 @@ cd ..
 cd unitree_rl_lab
 ./unitree_rl_lab.sh -i
 ```
-
-[WebL Link](https://jeff900804.github.io/URSROBOT_Quadruped/)
