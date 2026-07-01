@@ -1,1 +1,277 @@
 
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Terrain-aware locomotion on discontinuous terrains with Unitree Go2, LiDAR elevation maps, and reinforcement learning." />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Terrain-Aware Locomotion on Discontinuous Terrains</title>
+  <link rel="stylesheet" href="./assets/css/style.css" />
+</head>
+<body>
+  <main>
+    <section class="hero" id="top">
+      <div class="page-shell">
+        <p class="kicker">PROJECT FINAL REPORT · 2026</p>
+        <h1>Terrain-Aware Locomotion<br />on Discontinuous Terrains</h1>
+        <p class="hero-subtitle">Learning foothold-aware quadrupedal locomotion for Unitree Go2 using LiDAR elevation maps and reinforcement learning.</p>
+
+        <div class="authors" aria-label="Project authors and affiliation">
+          <span class="author">Cavendish Chen</span>
+          <span class="separator">·</span>
+          <span>Department of Power Mechanical Engineering, National Tsing Hua University</span>
+        </div>
+
+        <div class="link-row" aria-label="Project navigation">
+          <a class="pill-link" href="#demo">Demo Videos</a>
+          <a class="pill-link" href="#method">Method</a>
+          <a class="pill-link" href="#results">Experiments</a>
+          <a class="pill-link" href="#report">Final Report</a>
+        </div>
+
+        <p class="note-inline">This site is a presentation-oriented project page. Replace the bundled placeholder clips with your own simulation and real-robot videos before publishing.</p>
+      </div>
+    </section>
+
+    <section class="section intro-section" id="abstract">
+      <div class="content-narrow">
+        <h2>Abstract</h2>
+        <p>
+          Traversing gaps, stepping stones, and narrow support regions requires a quadruped robot to reason about <em>where</em> it can safely place its feet, rather than only recovering after instability occurs. This project develops a terrain-aware locomotion framework for Unitree Go2 that combines a local LiDAR-based elevation map with proprioception and velocity commands in a reinforcement-learning policy. The policy is trained in simulation through a two-stage curriculum: a multi-terrain foundation stage followed by disturbance-aware fine-tuning with height perturbations and touchdown penalties. We evaluate the resulting method on discontinuous terrain families and demonstrate the complete perception-to-control pipeline in both simulation and real-world deployment.
+        </p>
+      </div>
+    </section>
+
+    <section class="section demo-section" id="demo">
+      <div class="content-wide">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-index">01 · DEMONSTRATION</p>
+            <h2>Project at a Glance</h2>
+          </div>
+          <p class="section-side-note">主影片放在這裡。建議使用 16:9、15–45 秒的完整穿越片段。</p>
+        </div>
+
+        <figure class="video-card video-card-hero">
+          <video class="project-video" controls muted loop playsinline preload="metadata" poster="./assets/images/hero-demo-poster.svg">
+            <source src="./assets/videos/hero-demo.mp4" type="video/mp4" />
+            Your browser does not support embedded video.
+          </video>
+          <figcaption>
+            <strong>Hero Demo — Terrain-Aware Traversal</strong>
+            <span>Replace <code>assets/videos/hero-demo.mp4</code> with your strongest end-to-end demonstration.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section method-section" id="method">
+      <div class="content-wide">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-index">02 · METHOD</p>
+            <h2>From Terrain Sensing to Motor Control</h2>
+          </div>
+          <p class="section-side-note">將流程壓縮成一張圖，讓老師或評審可以在 10 秒內看懂系統。</p>
+        </div>
+
+        <div class="pipeline" aria-label="Perception-to-control pipeline">
+          <article class="pipeline-block">
+            <span class="pipeline-number">01</span>
+            <div class="pipeline-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><path d="M12 47h40M17 40l8-8 7 4 8-13 7 8 5-4"/><circle cx="18" cy="17" r="7"/><path d="M18 10v14M11 17h14"/></svg>
+            </div>
+            <h3>Terrain Perception</h3>
+            <p>L1 LiDAR and robot state provide a local observation of the upcoming support area.</p>
+          </article>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <article class="pipeline-block">
+            <span class="pipeline-number">02</span>
+            <div class="pipeline-icon grid-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><rect x="10" y="11" width="44" height="42" rx="2"/><path d="M21 11v42M32 11v42M43 11v42M10 22h44M10 33h44M10 44h44"/><path d="M22 33h10v11H22zM43 22h11v11H43z"/></svg>
+            </div>
+            <h3>Elevation Map</h3>
+            <p>A body-aligned <strong>17 × 11</strong> height grid encodes terrain geometry as a 187-D policy input.</p>
+          </article>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <article class="pipeline-block">
+            <span class="pipeline-number">03</span>
+            <div class="pipeline-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><circle cx="20" cy="17" r="4"/><circle cx="44" cy="17" r="4"/><circle cx="20" cy="47" r="4"/><circle cx="44" cy="47" r="4"/><circle cx="32" cy="32" r="6"/><path d="M24 19l5 9M40 19l-5 9M24 45l5-9M40 45l-5-9"/></svg>
+            </div>
+            <h3>RL Policy</h3>
+            <p>PPO fuses terrain map, proprioception, and velocity commands to generate locomotion actions.</p>
+          </article>
+          <div class="pipeline-arrow" aria-hidden="true">→</div>
+          <article class="pipeline-block">
+            <span class="pipeline-number">04</span>
+            <div class="pipeline-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64"><rect x="17" y="20" width="30" height="24" rx="4"/><path d="M24 20V13M32 20V13M40 20V13M24 44v7M32 44v7M40 44v7M17 28h-7M17 36h-7M47 28h7M47 36h7"/><circle cx="26" cy="32" r="2"/><circle cx="38" cy="32" r="2"/></svg>
+            </div>
+            <h3>Go2 Control</h3>
+            <p>The action is converted to low-level PD targets and executed by the Unitree Go2 controller.</p>
+          </article>
+        </div>
+
+        <div class="method-notes">
+          <article>
+            <h3>Simulation Training</h3>
+            <p><strong>Phase 1.</strong> Train a foundation policy over mixed terrains: gaps, stepping stones, narrow beams, stairs, and roughness.</p>
+            <p><strong>Phase 2.</strong> Fine-tune under ±5 cm terrain perturbations and a touchdown penalty to strengthen unsafe-foothold avoidance.</p>
+          </article>
+          <article>
+            <h3>Deployment Alignment</h3>
+            <p>Deployment preserves the same local-map representation used in training. LiDAR/body-frame transforms and scan-order alignment are handled explicitly so the policy receives terrain in the correct spatial orientation.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section video-grid-section">
+      <div class="content-wide">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-index">03 · VIDEO CASES</p>
+            <h2>Simulation and Real-World Cases</h2>
+          </div>
+          <p class="section-side-note">這裡最適合各放 10–20 秒，並讓每一段影片只傳達一件事。</p>
+        </div>
+
+        <div class="video-grid">
+          <figure class="video-card">
+            <video class="project-video" controls muted loop playsinline preload="metadata" poster="./assets/images/stepping-stones-poster.svg">
+              <source src="./assets/videos/sim-stepping-stones.mp4" type="video/mp4" />
+            </video>
+            <figcaption>
+              <strong>Stepping-Stone Traversal</strong>
+              <span>Show map-aware foot placement across discrete support regions.</span>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <video class="project-video" controls muted loop playsinline preload="metadata" poster="./assets/images/gap-perturbation-poster.svg">
+              <source src="./assets/videos/sim-gap-perturbation.mp4" type="video/mp4" />
+            </video>
+            <figcaption>
+              <strong>Gap and Height Perturbation</strong>
+              <span>Use this slot to demonstrate robustness under local terrain mismatch.</span>
+            </figcaption>
+          </figure>
+          <figure class="video-card">
+            <video class="project-video" controls muted loop playsinline preload="metadata" poster="./assets/images/real-go2-poster.svg">
+              <source src="./assets/videos/real-go2-demo.mp4" type="video/mp4" />
+            </video>
+            <figcaption>
+              <strong>Real-World Go2 Deployment</strong>
+              <span>Show the actual robot, the terrain, and the successful traversal in one shot.</span>
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section results-section" id="results">
+      <div class="content-wide">
+        <div class="section-heading-row">
+          <div>
+            <p class="section-index">04 · EXPERIMENTS</p>
+            <h2>Evaluation Design</h2>
+          </div>
+          <p class="section-side-note">這一段用來回答「你如何證明方法有效？」</p>
+        </div>
+
+        <div class="results-layout">
+          <div class="experiment-table-wrap" role="region" aria-label="Experiment design table" tabindex="0">
+            <table class="experiment-table">
+              <thead>
+                <tr>
+                  <th>Compared setting</th>
+                  <th>What it isolates</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Ours</strong></td>
+                  <td>Terrain map + Phase 2 + disturbance</td>
+                  <td>Full proposed method</td>
+                </tr>
+                <tr>
+                  <td><strong>w/o disturbance</strong></td>
+                  <td>Remove ±5 cm perturbation</td>
+                  <td>Measure robustness benefit</td>
+                </tr>
+                <tr>
+                  <td><strong>w/o Phase 2</strong></td>
+                  <td>Remove refinement stage</td>
+                  <td>Measure fine-tuning benefit</td>
+                </tr>
+                <tr>
+                  <td><strong>Blind</strong></td>
+                  <td>Remove terrain observation</td>
+                  <td>Measure perception benefit</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <aside class="results-aside">
+            <h3>Terrain Families</h3>
+            <div class="tag-list">
+              <span>Single Gap</span>
+              <span>Balance Beam</span>
+              <span>Stepping Stone</span>
+              <span>Cylindrical Stone</span>
+              <span>Upward Stairs</span>
+              <span>Downward Stairs</span>
+              <span>Rough Terrain</span>
+            </div>
+            <h3>Metrics</h3>
+            <ul class="metrics-list">
+              <li><strong>Success rate</strong><span>Task completion across 20 trials/configuration</span></li>
+              <li><strong>Travel distance</strong><span>Progress before failure or termination</span></li>
+              <li><strong>Velocity error</strong><span>Tracking quality under fixed commands</span></li>
+            </ul>
+          </aside>
+        </div>
+
+        <div class="result-callout">
+          <strong>What to add before the final presentation:</strong>
+          insert one compact plot or table here showing the final success rates / tracking errors. Keep detailed per-terrain values in the written report, and use this page for the most convincing summary figure.
+        </div>
+      </div>
+    </section>
+
+    <section class="section summary-section" id="report">
+      <div class="content-narrow">
+        <p class="section-index">05 · CONCLUSION</p>
+        <h2>Project Summary</h2>
+        <p>
+          This work builds a complete terrain-aware locomotion pipeline that links LiDAR sensing, local elevation mapping, reinforcement-learning policy inference, and low-level quadruped control. The key contribution is not simply making the robot walk over rough terrain, but enabling it to use local terrain geometry to distinguish safe support regions from gaps and other hazardous areas.
+        </p>
+        <div class="summary-points">
+          <div><span>01</span><p>Body-aligned 17 × 11 local elevation-map representation.</p></div>
+          <div><span>02</span><p>Two-stage RL training with terrain perturbations and touchdown-aware refinement.</p></div>
+          <div><span>03</span><p>Simulation evaluation and real-world Unitree Go2 deployment workflow.</p></div>
+        </div>
+        <div class="report-placeholder">
+          <span class="report-icon" aria-hidden="true">PDF</span>
+          <div>
+            <strong>Final report PDF</strong>
+            <p>Place your report at <code>assets/report/final-report.pdf</code>, then change this placeholder link in <code>index.html</code> to publish it here.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="page-shell footer-inner">
+      <span>Terrain-Aware Locomotion on Discontinuous Terrains</span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+  </footer>
+
+  <script src="./assets/js/main.js"></script>
+</body>
+</html>
