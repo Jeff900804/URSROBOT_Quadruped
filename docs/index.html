@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Quadruped Robot Project</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: white;
+      color: #303030;
+      font-family: Arial, Helvetica, sans-serif;
+      text-align: center;
+    }
+
+    .container {
+      width: min(1080px, 92%);
+      margin: 0 auto;
+      padding: 55px 0 70px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 4.3rem);
+      line-height: 1.1;
+      font-weight: 750;
+      letter-spacing: -2px;
+    }
+
+    .authors {
+      margin-top: 28px;
+      color: #1597f5;
+      font-size: 1.4rem;
+      line-height: 1.7;
+    }
+
+    .affiliation {
+      margin-top: 5px;
+      color: #202020;
+      font-size: 1.3rem;
+    }
+
+    .subtitle {
+      margin-top: 24px;
+      color: #d00000;
+      font-size: 1.3rem;
+      font-weight: bold;
+      line-height: 1.45;
+    }
+
+    .buttons {
+      margin: 28px 0 70px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 13px 23px;
+      border-radius: 999px;
+      background: #333;
+      color: white;
+      text-decoration: none;
+      font-size: 1.05rem;
+      font-weight: 600;
+      transition: 0.15s;
+    }
+
+    .button:hover {
+      background: #111;
+      transform: translateY(-2px);
+    }
+
+    .video-wrapper {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border-radius: 12px;
+      background: black;
+    }
+
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding-top: 35px;
+      }
+
+      h1 {
+        letter-spacing: -1px;
+      }
+
+      .authors,
+      .affiliation,
+      .subtitle {
+        font-size: 1.05rem;
+      }
+
+      .button {
+        padding: 11px 17px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+
+    <h1>
+      Terrain-Aware Quadrupedal<br>
+      Locomotion on Stepping Stones
+    </h1>
+
+    <div class="authors">
+      Your Name<sup>1</sup>
+      &nbsp; Coauthor Name<sup>1</sup>
+      &nbsp; Advisor Name<sup>1</sup>
+    </div>
+
+    <div class="affiliation">
+      <sup>1</sup>National Tsing Hua University
+    </div>
+
+    <div class="subtitle">
+      Project Page<br>
+      Quadruped Robot Locomotion Research
+    </div>
+
+    <div class="buttons">
+      <a class="button" href="https://your-paper-link.com" target="_blank">
+        📄 Paper
+      </a>
+
+      <a class="button" href="https://arxiv.org/" target="_blank">
+        ✈ arXiv
+      </a>
+
+      <a class="button" href="https://github.com/your-account/your-repository" target="_blank">
+        💻 Code
+      </a>
+
+      <a class="button" href="https://www.youtube.com/" target="_blank">
+        ▶ Video
+      </a>
+    </div>
+
+    <div class="video-wrapper">
+      <iframe
+        src="https://www.youtube.com/embed/VIDEO_ID"
+        title="Project Video"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+  </main>
+</body>
+</html>
